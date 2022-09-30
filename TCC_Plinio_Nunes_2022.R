@@ -1,7 +1,18 @@
-#versao 1
-# Efeito do emprestimo na mudança de tipo de vendedor (De Pessoa Física para Pessoa Juridica) na plataforma.
+#Versão Final - TCC - Data Science & Analytics
 
-# Podemos considerar que o Vendedor que pega emprestimo se profissionaliza/ formaliza
+# Adesão de crédito financeiro após o início da pandemia, interferiu nas vendas efetuadas no e-commerce?
+
+# Objetivo:
+#O presente trabalho tem como objetivo desenvolver e documentar um estudo,
+#realizado por meio do modelo de Diff-in-Diff, sobre o efeito causado nas vendas
+#geradas pelo canal de e-commerce aos vendedores que optaram pela aquisição de
+#crédito após o início da pandemia. Portanto, foram coletados dados de quantidades
+#vendidas antes e depois do início da pandemia, e dados de características de cada
+#vendedor na plataforma, como por exemplo, UF do vendedor, se tem assessoria, vertical de vendas,
+#etc para execução da metodologia.
+#Baseado na quantidade de vendas geradas e nas características de cada vendedor,
+#verificou-se se o efeito causado sobre elas no período  pós aquisição do crédito financeiro.
+
 
 ########################################################################################
 # Instalção dos pacotes
