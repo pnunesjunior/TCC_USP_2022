@@ -11,9 +11,7 @@
 ## vendedor na plataforma, como por exemplo, UF do vendedor, se tem assessoria, vertical de vendas,
 ## etc para execução da metodologia.
 ## Baseado na quantidade de vendas geradas e nas características de cada vendedor,
-## verificou-se se o efeito causado sobre elas no período  pós aquisição do crédito financeiro.
-
-
+## verificou-se se o efeito causado sobre elas no período  pós aquisição do crédito financeiro
 ########################################################################################
 # Instalção dos pacotes
 ########################################################################################
