@@ -116,6 +116,17 @@ ggplot(data = dataset_diff, mapping = aes(x = log_pedidos)) +
   facet_wrap(vars(Periodo_Venda))
 
 ########################################################################################
+## Em análise, observou-se que há uma grande aglomeração de vendedores que receberam entre 1 e 5 pedidos no período observado.
+## Dividindo esse universo em dois grupos: optantes e não optantes pelo crédito, notou-se que o grupo dos não optantes têm a
+## maior concentração de vendedores, no entanto, observou-se também, uma grande diferença de comportamento na média na
+## quantidade de vendas entre eles. No grupo 0, denominado para os não optantes pelo crédito,
+## destaca-se que a maior parte dos seus vendedores é concentrada no cluster em que tiveram entre 1 e 5 pedidos recebidos,
+## enquanto o grupo 1, denominado para quem optou pelo crédito, está entre 8 e 12 recebidos, ou seja,
+## o grupo optante pelo crédito já tem uma característica ter uma média maior de vendas do que  o grupo não optante.
+########################################################################################
+
+
+########################################################################################
 ## Analise
 ########################################################################################
 
@@ -138,9 +149,6 @@ ggplot(plot_data, aes(x = Seller_Emprestimo, y = mean_pedidos)) +
   ylab("Média de Orders")+
   facet_wrap(vars(Efeito_Tratamento))
 
-# Dispersão de Vendas entre os Sellers  que tomaram ou não emprestimo antes e depois da Pandemia.
-# Indicadores está sobre médida de log dos pedidos.
-
 ########################################################################################
 ## Analise
 ########################################################################################
@@ -159,6 +167,13 @@ ggplot(plot_data, aes(x = Efeito_Tratamento, y = mean_pedidos, color = Seller_Em
   geom_line(aes(group = Seller_Emprestimo))
 
 ########################################################################################
+## Sobre as médias de vendas geradas em cada período, antes do início da pandemia e depois do início da pandemia,
+## e para cada um dos grupos, controle e tratado, observou-se que houve um crescimento mais acentuado na média de vendas
+## no pós pandemia para o grupo tratado, ou seja, para o grupo que optou pelo crédito.
+########################################################################################
+
+
+########################################################################################
 ## Diff - in - Diff Calculo manual
 ########################################################################################
 
@@ -167,9 +182,6 @@ diffs <- dataset_diff %>%
   summarize(mean_orders = mean(log_pedidos),
             med_pedidos_vendidos = mean(Total_Pedidos))
 diffs
-
-
-#
 
 # Grupo de Tratamento - Pegou Emprestimo
 # Grupo de Controle - Não pegou emprestimo
@@ -233,6 +245,15 @@ ggplot(diffs, aes(x = as.factor(Periodo_Venda), y = mean_orders,
            label = "Efeito", size = 2)
 
 ########################################################################################
+## Aplicando a regressão linear simples, ou seja, considerando apenas as variáveis de período e
+## quantidade de vendas dos dados obtidos, por meio da metodologia Diff-in-Diff, observou-se que:
+
+## 1. O efeito da aquisição do crédito provocou um aumento de 85% sobre a média de vendas do grupo tratado;
+## 2. E que no geral, o grupo tratado vendeu aproximadamente  60% a mais do que o grupo de controle após o efeito.
+########################################################################################
+
+
+########################################################################################
 ## Diff - In - Diff Simples - Regressão Linear
 ########################################################################################
 
@@ -265,9 +286,34 @@ diff_diff_controls <- tidy(modelos_variaveis) %>%
 
 modelsummary(list("Simples" = modelo_simples, "Completo" = modelos_variaveis))
 
-# Nenhuma variavel mostrou importancia estatistica significante para o estudo.
+########################################################################################
+## Neste novo cenário, notou-se, estaticamente, que as demais variáveis de atributo dos vendedores
+## não tiveram grande influência para efeito positivos nas vendas. O percentual da média de vendas do grupo
+## tratado comparado ao grupo de controle ainda se mostra estável. Quando se considera todas as variáveis,
+## há uma variação de 59% para 56%, ou seja, o crescimento das vendas não está correlacionado ao porte do
+## vendedor dentro da plataforma.
+########################################################################################
 
-# Não foi possíveis incluir a variavel de UF do vendedor, pois o limite de memoria não suportou o processamento.
+########################################################################################
+## Conclusão
 
-## Conclusão: Adesão de emprestimo não fez com que houvesse aumento de vendas superiores para quem não pegou emprestimo.
-# Existe a possibilidade de outros fatores implicarem nesse estudo, como aquisiçao de emprestimo para quitar outras dividas e não para investimento,
+## Pelos dados observados e por meio do modelo Diff-in-Diff, comprovou-se verdadeira a hipótese de que o crédito
+## adquirido após o início da pandemia influenciou na quantidade de vendas geradas pelo canal de e-commerce.
+## Por meio deste estudo, foi possível verificar que os vendedores que optaram pelo crédito tiveram um aumento
+## nas vendas após a aquisição. Porém, apenas as características qualitativas trazidas ao dataset, como por exemplo:
+## vertical de vendas, ter assessoria ou segmento em que o vendedor está registrado, não explicam estatisticamente
+## a influência sobre o efeito causado nas vendas. A hipótese mais provável é que a quantidade de itens/anúncios
+## ativos após aquisição do crédito tenha influência sobre o efeito, pois por meio dos dados,  também foi possível
+## observar, que assim com a quantidade de vendas, a quantidade de anúncios ativos, também teve aumento após o vendedor
+## fazer a aquisição do crédito . Existe a hipótese que ao aumentar o leque de produtos, possa ter aumentado também
+## a possibilidade de gerar vendas na plataforma.
+## Assim como disse Albouy(2004), na qual menciona que infelizmente em muitos casos é difícil, e até impossível,
+## verificar as suposições em modelo e como eles são feitos sobre quantidades não observáveis, acredita-se que outros
+## fatores não observados ou sobre dados que não são possíveis agregar ao dataset, possam ter contribuído sobre o efeito nas
+## vendas ao grupo de vendedores que optaram pelo crédito. É importante destacar que o estudo foi aplicado sobre os dados
+## de vendas geradas apenas para o canal de e-commerce e de um marketplace específico, e que  é comum que os vendedores
+## atuem em mais de  um meio de canal de vendas, como loja física, vendas por site próprio, outros marketplaces, etc.
+## As vendas geradas por esses outros canais ou características dos produtos vendidos, também podem ter influenciado
+## nas vendas após a aquisição do crédito ou influenciar no resultado final deste estudo, porém dados como esses são
+## mais difíceis de serem coletados e incluídos na amostra para análise mais completa.
+########################################################################################
